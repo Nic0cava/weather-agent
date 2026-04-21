@@ -1,4 +1,4 @@
-import json
+﻿import json
 import os
 
 import requests
@@ -38,7 +38,9 @@ class CurrentWeather(BaseModel):
 
     time: str | None = None
     temperature_2m: float | None = None
+    temperature_2m_f: float | None = None
     apparent_temperature: float | None = None
+    apparent_temperature_f: float | None = None
     relative_humidity_2m: float | None = None
     wind_speed_10m: float | None = None
     weather_code: int | None = None
@@ -50,7 +52,9 @@ class CurrentUnits(BaseModel):
 
     time: str | None = None
     temperature_2m: str | None = None
+    temperature_2m_f: str | None = None
     apparent_temperature: str | None = None
+    apparent_temperature_f: str | None = None
     relative_humidity_2m: str | None = None
     wind_speed_10m: str | None = None
     weather_code: str | None = None
@@ -63,6 +67,7 @@ class WeatherPayload(BaseModel):
     latitude: float | None = None
     longitude: float | None = None
     timezone: str | None = None
+    location_label: str | None = None
     current: CurrentWeather | None = None
     current_units: CurrentUnits | None = None
 
@@ -90,6 +95,54 @@ def _get_client() -> OpenAI:
     return OpenAI(api_key=api_key)
 
 
+def _title_case(value: str | None) -> str | None:
+    if not value:
+        return None
+    return " ".join(part.capitalize() for part in value.strip().split())
+
+
+def _reverse_geocode_location_label(latitude: float, longitude: float) -> str | None:
+    """Resolve human-readable location label like 'Paris, France' from coordinates."""
+    try:
+        response = requests.get(
+            "https://nominatim.openstreetmap.org/reverse",
+            params={
+                "format": "jsonv2",
+                "lat": latitude,
+                "lon": longitude,
+                "zoom": 10,
+                "addressdetails": 1,
+            },
+            headers={"User-Agent": "weather-agent/1.0"},
+            timeout=10,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        address = payload.get("address", {})
+    except Exception:
+        return None
+
+    city = (
+        address.get("city")
+        or address.get("town")
+        or address.get("village")
+        or address.get("municipality")
+        or address.get("county")
+    )
+    country = address.get("country")
+
+    city = _title_case(city)
+    country = _title_case(country)
+
+    if city and country:
+        return f"{city}, {country}"
+    if city:
+        return city
+    if country:
+        return country
+    return None
+
+
 def get_weather(latitude: float, longitude: float) -> dict:
     """Get current weather conditions from Open-Meteo for specific coordinates."""
     response = requests.get(
@@ -102,12 +155,34 @@ def get_weather(latitude: float, longitude: float) -> dict:
     )
     response.raise_for_status()
     data = response.json()
+    current = data.get("current", {})
+    current_units = data.get("current_units", {})
+
+    temp_c = current.get("temperature_2m")
+    apparent_c = current.get("apparent_temperature")
+
+    temp_f = (float(temp_c) * 9 / 5 + 32) if temp_c is not None else None
+    apparent_f = (float(apparent_c) * 9 / 5 + 32) if apparent_c is not None else None
+
+    current_with_converted = {
+        **current,
+        "temperature_2m_f": temp_f,
+        "apparent_temperature_f": apparent_f,
+    }
+    current_units_with_converted = {
+        **current_units,
+        "temperature_2m_f": "°F",
+        "apparent_temperature_f": "°F",
+    }
+    location_label = _reverse_geocode_location_label(latitude, longitude)
+
     return {
         "latitude": data.get("latitude"),
         "longitude": data.get("longitude"),
         "timezone": data.get("timezone"),
-        "current": data.get("current", {}),
-        "current_units": data.get("current_units", {}),
+        "location_label": location_label,
+        "current": current_with_converted,
+        "current_units": current_units_with_converted,
     }
 
 
@@ -165,3 +240,4 @@ def run_weather_chat(user_message: str) -> WeatherResponse:
         parsed.weather = weather_payload
 
     return parsed
+

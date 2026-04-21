@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -108,6 +108,35 @@
   .atmospheric-bg {
     background: radial-gradient(circle at top right, #1a1a1a 0%, #0a0a0a 100%);
   }
+  .thinking-dots {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .thinking-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: #a3a3a3;
+    animation: pulse-dot 1.2s infinite ease-in-out;
+  }
+  .thinking-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .thinking-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes pulse-dot {
+    0%, 80%, 100% {
+      transform: scale(0.7);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 </style>
 </head>
 <body class="bg-[#0A0A0A] text-white min-h-screen atmospheric-bg overflow-x-hidden md:overflow-hidden">
@@ -130,74 +159,10 @@
 
   <main class="max-w-[768px] mx-auto px-gutter py-xl flex flex-col min-h-[calc(100vh-64px-80px)] pb-40">
     <div id="mobile-chat-messages" class="space-y-lg">
-      <div class="flex justify-end">
-        <div class="bg-[#2D2D2D] text-white p-md rounded-2xl rounded-tr-none max-w-[85%] font-chat-bubble text-chat-bubble shadow-sm">
-          What is the weather like in Paris?
-        </div>
-      </div>
-
       <div class="flex justify-start">
         <div class="space-y-md w-full max-w-[90%]">
           <div class="bg-[#1E1E1E]/80 text-on-surface p-md rounded-2xl rounded-tl-none font-chat-bubble text-chat-bubble glass-card border border-[#2D2D2D]">
-            Bonjour! Paris is currently enjoying a beautiful day. Here is the latest atmospheric report for you.
-          </div>
-
-          <div class="glass-card border border-[#2D2D2D] shadow-2xl rounded-3xl p-lg relative overflow-hidden group bg-[#131313]/50">
-            <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-lg">
-              <div class="space-y-1">
-                <span class="font-label-caps text-label-caps text-neutral-400 uppercase tracking-widest">Current Condition</span>
-                <h2 class="font-headline-lg text-headline-lg text-white">Paris, France</h2>
-                <p class="font-body-md text-neutral-500">Partly Cloudy &bull; Monday, 14:30</p>
-              </div>
-              <div class="flex items-center gap-md">
-                <span class="material-symbols-outlined text-[64px] text-white" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
-                <div class="text-right">
-                  <span class="font-display-xl text-display-xl font-data-mono leading-none text-white">22&deg;</span>
-                  <span class="font-headline-md text-neutral-500 align-top">C</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-md mt-lg relative z-10">
-              <div class="bg-[#1E1E1E]/40 p-md rounded-2xl border border-[#2D2D2D]">
-                <div class="flex items-center gap-xs text-white mb-1">
-                  <span class="material-symbols-outlined text-sm">humidity_percentage</span>
-                  <span class="font-label-caps text-label-caps uppercase">Humidity</span>
-                </div>
-                <span class="font-data-mono text-body-lg text-white">45%</span>
-              </div>
-              <div class="bg-[#1E1E1E]/40 p-md rounded-2xl border border-[#2D2D2D]">
-                <div class="flex items-center gap-xs text-white mb-1">
-                  <span class="material-symbols-outlined text-sm">air</span>
-                  <span class="font-label-caps text-label-caps uppercase">Wind</span>
-                </div>
-                <span class="font-data-mono text-body-lg text-white">10 km/h</span>
-              </div>
-              <div class="bg-[#1E1E1E]/40 p-md rounded-2xl border border-[#2D2D2D]">
-                <div class="flex items-center gap-xs text-white mb-1">
-                  <span class="material-symbols-outlined text-sm">device_thermostat</span>
-                  <span class="font-label-caps text-label-caps uppercase">Feels Like</span>
-                </div>
-                <span class="font-data-mono text-body-lg text-white">24&deg;C</span>
-              </div>
-              <div class="bg-[#1E1E1E]/40 p-md rounded-2xl border border-[#2D2D2D]">
-                <div class="flex items-center gap-xs text-white mb-1">
-                  <span class="material-symbols-outlined text-sm">light_mode</span>
-                  <span class="font-label-caps text-label-caps uppercase">UV Index</span>
-                </div>
-                <span class="font-data-mono text-body-lg text-white">4 (Low)</span>
-              </div>
-            </div>
-
-            <div class="mt-lg rounded-2xl overflow-hidden h-32 w-full relative border border-[#2D2D2D]">
-              <img alt="Paris map" class="w-full h-full object-cover grayscale brightness-50 opacity-40 group-hover:opacity-60 transition-all duration-700" data-alt="A stylized minimalist map of central Paris streets with a focus on the Seine river and major boulevards" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Q2nb9ZxrIfuf4pFCxMgO08MwjSQMLw660QTf3Tigt3sRpHA_B2V9c05FqyPoIboLkDHaOjIERtbUROqQ2kkRMt83rqALW5w8XPtJ1vcdW2BMvYduZpFctT8s81lHiTcQlsxfd2fJh8DLC951FEnfOHpzfMO9iqYb-0Y-3OURpdiw3iv2vWeq4s_vAy1WH6OL54XdvZcIzsLPENdMiGBE67dU0avjn8Axy4WN5sC3OSPhHVCdLgie8wrku047ttIvpMK_JCOVHFo"/>
-              <div class="absolute inset-0 bg-gradient-to-t from-[#131313]/90 to-transparent"></div>
-              <div class="absolute bottom-4 left-4 flex items-center gap-2">
-                <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">location_on</span>
-                <span class="text-sm font-semibold text-white">Ile-de-France</span>
-              </div>
-            </div>
+            Welcome to Aura Weather. Ask me about current weather in any location, and I will return a polished, real-time report.
           </div>
         </div>
       </div>
@@ -216,7 +181,7 @@
         <button class="p-3 text-neutral-500 hover:text-white transition-colors">
           <span class="material-symbols-outlined">add_circle</span>
         </button>
-        <input id="mobile-chat-input" class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-neutral-600 text-body-md py-2 px-2" placeholder="Ask Aura about the weather..." type="text"/>
+        <input id="mobile-chat-input" class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-neutral-600 text-body-md py-2 px-2" placeholder="What is the current weather like in Paris?" type="text"/>
         <button id="mobile-send-button" class="bg-white text-black p-3 rounded-full hover:bg-neutral-200 active:scale-95 transition-all shadow-lg flex items-center justify-center">
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
         </button>
@@ -310,82 +275,15 @@
     </aside>
 
     <main class="flex-1 md:ml-64 relative flex flex-col h-full bg-surface-container-lowest">
-      <div class="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
+      <div id="desktop-scroll-area" class="flex-1 overflow-y-auto custom-scrollbar px-6 py-8">
         <div id="desktop-chat-messages" class="max-w-[768px] mx-auto space-y-10">
-          <div class="flex justify-end">
-            <div class="max-w-[80%] bg-surface-container-high text-on-surface px-6 py-4 rounded-3xl rounded-tr-none border border-outline-variant font-chat-bubble text-chat-bubble">
-              What is the weather like in Paris?
-            </div>
-          </div>
-
           <div class="flex justify-start items-start gap-4">
             <div class="w-8 h-8 rounded-lg bg-primary-container flex-shrink-0 flex items-center justify-center text-white mt-1 border border-outline-variant">
               <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
             </div>
             <div class="flex-1 space-y-6">
               <div class="max-w-[90%] text-on-surface font-chat-bubble text-chat-bubble leading-relaxed">
-                Currently in Paris, the atmosphere is pleasant with partial cloud cover. It's a great day for a walk along the Seine. Here is the detailed report for your location:
-              </div>
-
-              <div class="glass-card ambient-shadow rounded-3xl p-8 relative overflow-hidden group">
-                <div class="absolute -top-12 -right-12 w-48 h-48 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors duration-500"></div>
-                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-                  <div>
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="material-symbols-outlined text-white" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
-                      <span class="font-headline-md text-headline-md tracking-tight">Paris, France</span>
-                    </div>
-                    <div class="text-neutral-400 font-medium">Monday, 2:45 PM &bull; Partly Cloudy</div>
-                    <div class="mt-6 flex items-baseline gap-2">
-                      <span class="font-display-xl text-display-xl text-white font-data-mono">22&deg;</span>
-                      <span class="text-2xl text-neutral-500 font-light">/ 14&deg;</span>
-                    </div>
-                  </div>
-                  <div class="flex-shrink-0">
-                    <span class="material-symbols-outlined text-[80px] text-white/80 drop-shadow-xl" style="font-variation-settings: 'FILL' 1;">partly_cloudy_day</span>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 pt-8 border-t border-neutral-800">
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                      <span class="material-symbols-outlined text-sm">humidity_mid</span>
-                      Humidity
-                    </div>
-                    <div class="font-data-mono text-lg text-white">48%</div>
-                  </div>
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                      <span class="material-symbols-outlined text-sm">air</span>
-                      Wind
-                    </div>
-                    <div class="font-data-mono text-lg text-white">12 km/h</div>
-                  </div>
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                      <span class="material-symbols-outlined text-sm">thermometer</span>
-                      Feels Like
-                    </div>
-                    <div class="font-data-mono text-lg text-white">24&deg;C</div>
-                  </div>
-                  <div class="space-y-1">
-                    <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
-                      <span class="material-symbols-outlined text-sm">light_mode</span>
-                      UV Index
-                    </div>
-                    <div class="font-data-mono text-lg text-white">Moderate (4)</div>
-                  </div>
-                </div>
-
-                <div class="mt-8 rounded-2xl h-40 w-full overflow-hidden relative border border-neutral-800">
-                  <img alt="Map of Paris" class="w-full h-full object-cover grayscale opacity-60 contrast-125" data-alt="stylized aerial map view of central Paris streets and the Eiffel Tower landmark in a clean minimalist design" data-location="Paris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfAZRGZ46VukpJU5OUgid_VQVbKZ193PYNbEuc7zqOdDUeL03PnDyT9YNBRkqAFFEBkLSo1SjEpnqf-w5bCpdFENwvEd2enzf8k28gl2YxbnGz0GPJtu5upXdM3BlkabUFJ3aVe7EB8nfQJzfBFUPVSI9zdsp0s-nt1PnkC5tEmF5xVNX8Zs2hBbDsXV4tRjqMmApo_aC4SpJi5JglSJOts86LV9JiGIx6vRb2ETXFoIKpCH8D_TbCroBCTkMN1d0PuatKznXkXZU"/>
-                  <div class="absolute inset-0 bg-neutral-950/40 mix-blend-multiply"></div>
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-10 h-10 bg-neutral-900 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
-                      <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">location_on</span>
-                    </div>
-                  </div>
-                </div>
+                Welcome to Aura Weather. Ask me about current weather in any location, and I will return a polished, real-time report.
               </div>
             </div>
           </div>
@@ -398,7 +296,7 @@
             <button class="p-3 text-neutral-500 hover:text-white transition-colors">
               <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
             </button>
-            <input id="desktop-chat-input" class="flex-1 border-none focus:ring-0 bg-transparent text-white px-2 font-body-md placeholder:text-neutral-600" placeholder="Ask about the weather..." type="text"/>
+            <input id="desktop-chat-input" class="flex-1 border-none focus:ring-0 bg-transparent text-white px-2 font-body-md placeholder:text-neutral-600" placeholder="What is the current weather like in Paris?" type="text"/>
             <div class="flex items-center gap-1">
               <button class="p-3 text-neutral-500 hover:text-white transition-colors">
                 <span class="material-symbols-outlined" data-icon="mic">mic</span>
@@ -491,6 +389,14 @@
       .replaceAll("'", "&#39;");
   }
 
+  function toTitleCase(value) {
+    return String(value)
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
+
   function deriveLocationLabel(userQuery) {
     const cleaned = (userQuery || "").trim().replace(/[?.!]+$/, "");
     const match = cleaned.match(/\b(?:in|for|at)\s+(.+)$/i);
@@ -506,7 +412,30 @@
       location = `${parts[1]}, ${parts[0]}`;
     }
 
-    return location || "Selected Location";
+    return location ? toTitleCase(location) : "Selected Location";
+  }
+
+  function wireTemperatureToggle(card) {
+    const toggle = card.querySelector(".js-temp-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", () => {
+      const nextUnit = toggle.dataset.unit === "C" ? "F" : "C";
+      toggle.dataset.unit = nextUnit;
+      toggle.textContent = nextUnit === "C" ? "Switch to °F" : "Switch to °C";
+
+      card.querySelectorAll("[data-temp-c][data-temp-f]").forEach((node) => {
+        node.textContent = nextUnit === "C"
+          ? node.getAttribute("data-temp-c")
+          : node.getAttribute("data-temp-f");
+      });
+
+      card.querySelectorAll("[data-unit-c][data-unit-f]").forEach((node) => {
+        node.textContent = nextUnit === "C"
+          ? node.getAttribute("data-unit-c")
+          : node.getAttribute("data-unit-f");
+      });
+    });
   }
 
   function createDesktopUserMessage(text) {
@@ -534,8 +463,12 @@
     const units = weather.current_units || {};
     const condition = weatherCodeToText(current.weather_code);
     const icon = weatherCodeToIcon(current.weather_code);
-    const location = escapeHtml(locationLabel || "Selected Location");
-    const dateTimeText = `${formatDateTime(current.time, weather.timezone)} • ${condition}`;
+    const location = escapeHtml(weather.location_label || locationLabel || "Selected Location");
+    const dateTimeText = `${formatDateTime(current.time, weather.timezone)} | ${condition}`;
+    const tempC = formatValue(current.temperature_2m);
+    const tempF = formatValue(current.temperature_2m_f);
+    const feelsC = formatValue(current.apparent_temperature);
+    const feelsF = formatValue(current.apparent_temperature_f);
 
     const card = document.createElement("div");
     card.className = "glass-card ambient-shadow rounded-3xl p-8 relative overflow-hidden group";
@@ -549,15 +482,17 @@
           </div>
           <div class="text-neutral-400 font-medium">${dateTimeText}</div>
           <div class="mt-6 flex items-baseline gap-2">
-            <span class="font-display-xl text-display-xl text-white font-data-mono">${formatValue(current.temperature_2m)}&deg;</span>
-            <span class="text-2xl text-neutral-500 font-light">Feels ${formatValue(current.apparent_temperature)}&deg;</span>
+            <span class="font-display-xl text-display-xl text-white font-data-mono" data-temp-c="${tempC}" data-temp-f="${tempF}">${tempC}</span>
+            <span class="font-headline-md text-neutral-500 align-top">°<span data-unit-c="C" data-unit-f="F">C</span></span>
+            <span class="text-2xl text-neutral-500 font-light">Feels <span data-temp-c="${feelsC}" data-temp-f="${feelsF}">${feelsC}</span>°<span data-unit-c="C" data-unit-f="F">C</span></span>
           </div>
+          <button type="button" class="js-temp-toggle mt-2 text-xs font-semibold text-neutral-300 px-3 py-1 rounded-full border border-neutral-700 hover:bg-neutral-800 transition-colors" data-unit="C">Switch to °F</button>
         </div>
-        <div class="flex-shrink-0">
+        <div class="flex flex-col items-end gap-3 self-start -mt-1">
           <span class="material-symbols-outlined text-[80px] text-white/80 drop-shadow-xl" style="font-variation-settings: 'FILL' 1;">${icon}</span>
         </div>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 pt-8 border-t border-neutral-800">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8 pt-6 border-t border-neutral-800">
         <div class="space-y-1">
           <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
             <span class="material-symbols-outlined text-sm">humidity_mid</span>
@@ -577,7 +512,7 @@
             <span class="material-symbols-outlined text-sm">thermometer</span>
             Feels Like
           </div>
-          <div class="font-data-mono text-lg text-white">${formatValue(current.apparent_temperature)}${units.apparent_temperature || "°C"}</div>
+          <div class="font-data-mono text-lg text-white"><span data-temp-c="${feelsC}" data-temp-f="${feelsF}">${feelsC}</span>°<span data-unit-c="C" data-unit-f="F">C</span></div>
         </div>
         <div class="space-y-1">
           <div class="flex items-center gap-2 text-neutral-500 text-xs font-semibold uppercase tracking-wider">
@@ -597,6 +532,7 @@
         </div>
       </div>
     `;
+    wireTemperatureToggle(card);
     return card;
   }
 
@@ -605,8 +541,12 @@
     const units = weather.current_units || {};
     const condition = weatherCodeToText(current.weather_code);
     const icon = weatherCodeToIcon(current.weather_code);
-    const location = escapeHtml(locationLabel || "Selected Location");
-    const dateTimeText = `${formatDateTime(current.time, weather.timezone)} • ${condition}`;
+    const location = escapeHtml(weather.location_label || locationLabel || "Selected Location");
+    const dateTimeText = `${formatDateTime(current.time, weather.timezone)} | ${condition}`;
+    const tempC = formatValue(current.temperature_2m);
+    const tempF = formatValue(current.temperature_2m_f);
+    const feelsC = formatValue(current.apparent_temperature);
+    const feelsF = formatValue(current.apparent_temperature_f);
 
     const card = document.createElement("div");
     card.className = "glass-card border border-[#2D2D2D] shadow-2xl rounded-3xl p-lg relative overflow-hidden group bg-[#131313]/50";
@@ -618,11 +558,16 @@
           <h2 class="font-headline-lg text-headline-lg text-white">${location}</h2>
           <p class="font-body-md text-neutral-500">${dateTimeText}</p>
         </div>
-        <div class="flex items-center gap-md">
-          <span class="material-symbols-outlined text-[64px] text-white" style="font-variation-settings: 'FILL' 1;">${icon}</span>
-          <div class="text-right">
-            <span class="font-display-xl text-display-xl font-data-mono leading-none text-white">${formatValue(current.temperature_2m)}&deg;</span>
-            <span class="font-headline-md text-neutral-500 align-top">${units.temperature_2m || "C"}</span>
+        <div class="flex flex-col items-end gap-2">
+          <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-[64px] text-white" style="font-variation-settings: 'FILL' 1;">${icon}</span>
+            <div class="text-right">
+              <span class="font-display-xl text-display-xl font-data-mono leading-none text-white" data-temp-c="${tempC}" data-temp-f="${tempF}">${tempC}</span>
+              <span class="font-headline-md text-neutral-500 align-top">°<span data-unit-c="C" data-unit-f="F">C</span></span>
+              <div class="mt-1">
+                <button type="button" class="js-temp-toggle text-xs font-semibold text-neutral-300 px-3 py-1 rounded-full border border-neutral-700 hover:bg-neutral-800 transition-colors" data-unit="C">Switch to °F</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -646,7 +591,7 @@
             <span class="material-symbols-outlined text-sm">device_thermostat</span>
             <span class="font-label-caps text-label-caps uppercase">Feels Like</span>
           </div>
-          <span class="font-data-mono text-body-lg text-white">${formatValue(current.apparent_temperature)}${units.apparent_temperature || "°C"}</span>
+          <span class="font-data-mono text-body-lg text-white"><span data-temp-c="${feelsC}" data-temp-f="${feelsF}">${feelsC}</span>°<span data-unit-c="C" data-unit-f="F">C</span></span>
         </div>
         <div class="bg-[#1E1E1E]/40 p-md rounded-2xl border border-[#2D2D2D]">
           <div class="flex items-center gap-xs text-white mb-1">
@@ -657,6 +602,7 @@
         </div>
       </div>
     `;
+    wireTemperatureToggle(card);
     return card;
   }
 
@@ -705,6 +651,48 @@
     return row;
   }
 
+  function createThinkingIndicatorMobile() {
+    const row = document.createElement("div");
+    row.className = "flex justify-start";
+    row.innerHTML = `
+      <div class="space-y-md w-full max-w-[90%]">
+        <div class="bg-[#1E1E1E]/80 text-on-surface p-md rounded-2xl rounded-tl-none font-chat-bubble text-chat-bubble glass-card border border-[#2D2D2D] inline-flex items-center">
+          Thinking
+          <span class="thinking-dots"><span></span><span></span><span></span></span>
+        </div>
+      </div>
+    `;
+    return row;
+  }
+
+  function createThinkingIndicatorDesktop() {
+    const row = document.createElement("div");
+    row.className = "flex justify-start items-start gap-4";
+    row.innerHTML = `
+      <div class="w-8 h-8 rounded-lg bg-primary-container flex-shrink-0 flex items-center justify-center text-white mt-1 border border-outline-variant">
+        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+      </div>
+      <div class="flex-1 space-y-6">
+        <div class="max-w-[90%] text-on-surface font-chat-bubble text-chat-bubble leading-relaxed inline-flex items-center">
+          Thinking
+          <span class="thinking-dots"><span></span><span></span><span></span></span>
+        </div>
+      </div>
+    `;
+    return row;
+  }
+
+  function scrollChatToBottom(messageContainer) {
+    if (messageContainer.id === "desktop-chat-messages") {
+      const desktopScroller = document.getElementById("desktop-scroll-area");
+      if (desktopScroller) {
+        desktopScroller.scrollTo({ top: desktopScroller.scrollHeight, behavior: "smooth" });
+        return;
+      }
+    }
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+
   async function sendChat(message) {
     const res = await fetch("/api/chat", {
       method: "POST",
@@ -720,48 +708,90 @@
     return data;
   }
 
-  async function handleSend(inputEl, sendBtnEl, messageContainer, createUser, createAssistant) {
+  async function handleSend(inputEl, sendBtnEl, messageContainer, createUser, createAssistant, createThinking) {
     const text = inputEl.value.trim();
     if (!text) return;
 
     messageContainer.appendChild(createUser(text));
-    messageContainer.scrollTop = messageContainer.scrollHeight;
+    scrollChatToBottom(messageContainer);
     inputEl.value = "";
     sendBtnEl.disabled = true;
+    const thinkingNode = createThinking();
+    messageContainer.appendChild(thinkingNode);
+    scrollChatToBottom(messageContainer);
 
     try {
       const data = await sendChat(text);
+      thinkingNode.remove();
       messageContainer.appendChild(createAssistant(data.response, data.weather, text));
     } catch (error) {
+      thinkingNode.remove();
       messageContainer.appendChild(createAssistant(`Error: ${error.message}`));
     } finally {
       sendBtnEl.disabled = false;
       inputEl.focus();
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+      scrollChatToBottom(messageContainer);
     }
   }
 
   mobileSendButton.addEventListener("click", () =>
-    handleSend(mobileInput, mobileSendButton, mobileMessages, createMobileUserMessage, createMobileAssistantBlock)
+    handleSend(
+      mobileInput,
+      mobileSendButton,
+      mobileMessages,
+      createMobileUserMessage,
+      createMobileAssistantBlock,
+      createThinkingIndicatorMobile
+    )
   );
   desktopSendButton.addEventListener("click", () =>
-    handleSend(desktopInput, desktopSendButton, desktopMessages, createDesktopUserMessage, createDesktopAssistantBlock)
+    handleSend(
+      desktopInput,
+      desktopSendButton,
+      desktopMessages,
+      createDesktopUserMessage,
+      createDesktopAssistantBlock,
+      createThinkingIndicatorDesktop
+    )
   );
 
   mobileInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      handleSend(mobileInput, mobileSendButton, mobileMessages, createMobileUserMessage, createMobileAssistantBlock);
+      handleSend(
+        mobileInput,
+        mobileSendButton,
+        mobileMessages,
+        createMobileUserMessage,
+        createMobileAssistantBlock,
+        createThinkingIndicatorMobile
+      );
     }
   });
 
   desktopInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      handleSend(desktopInput, desktopSendButton, desktopMessages, createDesktopUserMessage, createDesktopAssistantBlock);
+      handleSend(
+        desktopInput,
+        desktopSendButton,
+        desktopMessages,
+        createDesktopUserMessage,
+        createDesktopAssistantBlock,
+        createThinkingIndicatorDesktop
+      );
     }
   });
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+

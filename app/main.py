@@ -53,7 +53,7 @@ async def chat(payload: ChatRequest) -> ChatResponse:
     )
 
 
-# Run our application
+# Run application
 if __name__ == "__main__":
     import uvicorn
 

@@ -342,3 +342,79 @@ uv run main.py
 # 10. Create `.env` file
 - place all your SECRET_KEYS within this file
 - IMPORTANT: make sure `.env` is listed in the `.gitignore` file or you will leak your keys to GitHub
+
+# 11. Used Google's Stitch AI design tool to create a rough draft of the front end
+- Used codex to stitch the copied html code for mobile and desktop views within the index.html file
+- Then forced codex to review the code snippets to fix any gaps made
+- Tested both mobile and desktop views after running app, completing the front-end rough draft
+
+# 12.# 12. Weather Agent + Chat Integration Summary
+
+## Backend
+- Integrated weather agent into FastAPI by adding `POST /api/chat` in `app/main.py`.
+- Added `ChatRequest` and `ChatResponse` models for message input and structured response output.
+- `/api/chat` now returns:
+  - `response` (assistant text)
+  - `temperature`
+  - `weather` (structured payload for UI cards)
+
+## Weather Agent
+- Refactored `app/weather_agent.py` from script-style execution to reusable functions.
+- Added `run_weather_chat(user_message)` entrypoint for API use.
+- Kept OpenAI tool-calling flow and connected it to Open-Meteo weather lookup.
+- Expanded weather fields requested from Open-Meteo current conditions:
+  - `temperature_2m`
+  - `apparent_temperature`
+  - `relative_humidity_2m`
+  - `wind_speed_10m`
+  - `weather_code`
+  - `uv_index`
+- Structured output hardening:
+  - Replaced loose `dict` schema with strict nested Pydantic models (`CurrentWeather`, `CurrentUnits`, `WeatherPayload`) to satisfy OpenAI `response_format` schema requirements.
+
+## Frontend (existing design preserved)
+- Restored original `index.html` design and wired chat functionality into existing input/send controls.
+- Added client-side fetch integration to `/api/chat` for both mobile and desktop chat boxes.
+- Added dynamic assistant response rendering in existing style.
+- Added dynamic weather card rendering that matches the existing card aesthetic and appears when weather data is returned.
+- Card data now binds live API values (condition, temp, feels-like, humidity, wind, UV, timestamp).
+- Updated card location label behavior to use user-entered location text instead of coordinates.
+- Normalized two-part comma locations to standard order:
+  - `Italy, Rome` -> `Rome, Italy`
+
+
+# 13. Weather Card UX + Location Quality Updates
+
+## Weather Data + Backend Enhancements
+- Added precomputed Fahrenheit values in `app/weather_agent.py` so both units are available immediately in each response:
+  - `temperature_2m_f`
+  - `apparent_temperature_f`
+- Extended structured weather payload schema to include converted temperature fields and units.
+- Added reverse geocoding (Nominatim / OpenStreetMap) from returned coordinates to resolve user-friendly location labels.
+- Added `location_label` to weather payload so cards can display city/country labels such as `Paris, France` when available.
+
+## Frontend Chat UX Improvements
+- Added auto-scroll behavior so chat keeps latest messages in view as bubbles/cards are appended.
+- Added animated `Thinking...` indicator while the model is generating a response.
+- Removed seeded Paris example content and replaced with a welcome/call-to-action starter message.
+- Updated mobile and desktop input placeholders to:
+  - `What is the current weather like in Paris?`
+
+## Weather Card Rendering Updates
+- Wired dynamic weather cards to consume structured payload fields from `/api/chat`.
+- Added interactive per-card temperature unit toggle (`�C` <-> `�F`) without additional API calls.
+- Toggle now switches:
+  - Main display temperature
+  - Feels-like temperature
+  - Unit text labels
+- Repositioned toggle under the main large temperature display per latest UI preference.
+- Reduced spacing beneath toggle and tightened spacing before lower card divider/grid.
+- Moved weather icon slightly higher toward the upper-right corner to match original visual feel.
+
+## Location Display Formatting
+- Card location display now prioritizes backend `location_label` (city + country) when available.
+- Added frontend fallback title-casing for user-derived location strings when reverse geocoding is unavailable.
+
+## Reliability / Cleanup
+- Fixed encoding artifacts introduced during iterative edits (unit symbols and separators).
+- Re-ran Python compile checks for backend files after changes.
