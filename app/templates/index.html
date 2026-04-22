@@ -148,12 +148,12 @@
       <button class="text-white hover:bg-[#1E1E1E] transition-colors p-2 rounded-full active:scale-98 duration-200">
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <h1 class="text-lg font-bold font-manrope tracking-tight">Aura AI</h1>
+      <h1 class="text-lg font-bold font-manrope tracking-tight">Weather Agent</h1>
     </div>
     <div class="flex items-center gap-2">
-      <button class="text-white hover:bg-[#1E1E1E] transition-colors p-2 rounded-full active:scale-98 duration-200">
-        <span class="material-symbols-outlined">account_circle</span>
-      </button>
+      <div class="p-2 text-neutral-400">
+        <span class="material-symbols-outlined" data-icon="partly_cloudy_day">partly_cloudy_day</span>
+      </div>
     </div>
   </header>
 
@@ -162,15 +162,9 @@
       <div class="flex justify-start">
         <div class="space-y-md w-full max-w-[90%]">
           <div class="bg-[#1E1E1E]/80 text-on-surface p-md rounded-2xl rounded-tl-none font-chat-bubble text-chat-bubble glass-card border border-[#2D2D2D]">
-            Welcome to Aura Weather. Ask me about current weather in any location, and I will return a polished, real-time report.
+            Welcome to Weather Agent. Ask me about the current weather in any location, and I will return a polished, real-time report.
           </div>
         </div>
-      </div>
-
-      <div class="flex flex-wrap gap-sm justify-center py-md">
-        <button class="bg-[#1E1E1E] border border-[#2D2D2D] px-md py-sm rounded-full text-sm font-medium text-neutral-400 hover:border-white hover:text-white transition-all shadow-sm">How is the air quality?</button>
-        <button class="bg-[#1E1E1E] border border-[#2D2D2D] px-md py-sm rounded-full text-sm font-medium text-neutral-400 hover:border-white hover:text-white transition-all shadow-sm">Rain forecast for today?</button>
-        <button class="bg-[#1E1E1E] border border-[#2D2D2D] px-md py-sm rounded-full text-sm font-medium text-neutral-400 hover:border-white hover:text-white transition-all shadow-sm">Best time for a walk?</button>
       </div>
     </div>
   </main>
@@ -190,18 +184,18 @@
   </div>
 
   <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center h-20 pb-safe px-6 bg-[#0A0A0A] dark:bg-[#0A0A0A] border-t border-[#2D2D2D] tonal-lift">
-    <a class="flex flex-col items-center justify-center text-white bg-[#1E1E1E] rounded-xl px-3 py-1 active:scale-95 duration-150" href="#">
+    <a class="flex flex-col items-center justify-center text-neutral-500 hover:text-white transition-all active:scale-95 duration-150" href="#">
       <span class="material-symbols-outlined">chat</span>
-      <span class="font-['Manrope'] text-[10px] font-medium mt-1">Chat</span>
+      <span class="font-['Manrope'] text-[10px] font-medium mt-1">New Chat</span>
     </a>
     <a class="flex flex-col items-center justify-center text-neutral-500 hover:text-white transition-all active:scale-95 duration-150" href="#">
       <span class="material-symbols-outlined">wb_cloudy</span>
-      <span class="font-['Manrope'] text-[10px] font-medium mt-1">Forecast</span>
+      <span class="font-['Manrope'] text-[10px] font-medium mt-1">About</span>
     </a>
-    <a class="flex flex-col items-center justify-center text-neutral-500 hover:text-white transition-all active:scale-95 duration-150" href="#">
+    <!-- <a class="flex flex-col items-center justify-center text-neutral-500 hover:text-white transition-all active:scale-95 duration-150" href="#">
       <span class="material-symbols-outlined">history</span>
       <span class="font-['Manrope'] text-[10px] font-medium mt-1">History</span>
-    </a>
+    </a> -->
   </nav>
 </div>
 
@@ -212,21 +206,21 @@
       <div class="md:hidden">
         <span class="material-symbols-outlined text-neutral-400">menu</span>
       </div>
-      <h1 class="text-lg font-bold tracking-widest text-white dark:text-neutral-50 uppercase font-manrope">Atmospheric Intelligence</h1>
+      <h1 class="text-lg font-bold tracking-widest text-white dark:text-neutral-50 uppercase font-manrope">Weather Agent</h1>
     </div>
     <div class="flex items-center gap-6">
-      <button class="p-2 text-neutral-400 hover:text-white transition-colors scale-95 active:opacity-80">
+      <!-- <button class="p-2 text-neutral-400 hover:text-white transition-colors scale-95 active:opacity-80">
         <span class="material-symbols-outlined" data-icon="search">search</span>
       </button>
       <button class="p-2 text-neutral-400 hover:text-white transition-colors scale-95 active:opacity-80">
         <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-      </button>
-      <button class="p-2 text-neutral-400 hover:text-white transition-colors scale-95 active:opacity-80">
-        <span class="material-symbols-outlined" data-icon="settings">settings</span>
-      </button>
-      <div class="h-8 w-8 rounded-full overflow-hidden border border-neutral-800">
-        <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQi5G5jSWqWDl0k1cTxbt8Mf9GRx_Hl97wVvFJPmAlSaEDCvXfz6NdbcMdG8lQd7C35aAEbYz5_rgFd68-jUWQaDsopX4GG3I5mXqNeb9ACfhTOT51vj6i1ZGbAkCEdDCBNzx0xGznE-oCEj9rfN3EoUxFu82DNDRblaabsEpWIE5cGLZRGXpUtT-HB6uOGPwvqkMqez0vSeHh1mWoHaIbmO343Ov5I2qxtu7Ro_9V9LlAVQ1-E5kxf7sleAh_3Csb_H8iBNypPEQ"/>
+      </button> -->
+      <div class="p-2 text-neutral-400">
+        <span class="material-symbols-outlined" data-icon="partly_cloudy_day">partly_cloudy_day</span>
       </div>
+      <!-- <div class="h-8 w-8 rounded-full overflow-hidden border border-neutral-800">
+        <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQi5G5jSWqWDl0k1cTxbt8Mf9GRx_Hl97wVvFJPmAlSaEDCvXfz6NdbcMdG8lQd7C35aAEbYz5_rgFd68-jUWQaDsopX4GG3I5mXqNeb9ACfhTOT51vj6i1ZGbAkCEdDCBNzx0xGznE-oCEj9rfN3EoUxFu82DNDRblaabsEpWIE5cGLZRGXpUtT-HB6uOGPwvqkMqez0vSeHh1mWoHaIbmO343Ov5I2qxtu7Ro_9V9LlAVQ1-E5kxf7sleAh_3Csb_H8iBNypPEQ"/>
+      </div> -->
     </div>
   </header>
 
@@ -234,42 +228,29 @@
     <aside class="hidden md:flex fixed left-0 top-16 w-64 h-[calc(100vh-64px)] bg-neutral-900 dark:bg-[#121212] flex-col border-r border-neutral-800 dark:border-[#2D2D2D] z-40">
       <div class="flex flex-col py-6 gap-2">
         <div class="px-8 mb-4">
-          <div class="text-neutral-500 text-[10px] font-bold uppercase tracking-widest mb-1">Intelligence Suite</div>
-          <div class="text-white font-manrope text-sm font-medium">Navigation</div>
+          <div class="text-neutral-500 text-[10px] font-bold uppercase tracking-widest mb-1">Navigation</div>
         </div>
         <button class="mx-4 mb-6 flex items-center justify-center gap-2 bg-white text-black py-3 px-4 rounded-xl font-bold text-sm hover:bg-neutral-200 transition-all active:scale-95">
           <span class="material-symbols-outlined text-lg">add</span>
           New Chat
         </button>
         <nav class="flex flex-col gap-1 px-2">
-          <a class="text-white dark:text-neutral-50 pl-6 py-3 bg-neutral-800/50 font-manrope text-sm font-bold flex items-center gap-3 rounded-2xl" href="#">
+          <!-- <a class="text-white dark:text-neutral-50 pl-6 py-3 bg-neutral-800/50 font-manrope text-sm font-bold flex items-center gap-3 rounded-2xl" href="#">
             <span class="material-symbols-outlined" data-icon="home">home</span>
             Home
-          </a>
+          </a> -->
           <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
             <span class="material-symbols-outlined" data-icon="partly_cloudy_day">partly_cloudy_day</span>
-            Forecast
-          </a>
-          <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
+            About Page
+          </a> 
+          <!-- <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
             <span class="material-symbols-outlined" data-icon="history">history</span>
             History
           </a>
           <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
             <span class="material-symbols-outlined" data-icon="bookmarks">bookmarks</span>
-            Saved Locations
-          </a>
-        </nav>
-      </div>
-      <div class="mt-auto py-6 border-t border-neutral-800 px-2">
-        <nav class="flex flex-col gap-1">
-          <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
-            <span class="material-symbols-outlined" data-icon="settings">settings</span>
-            Settings
-          </a>
-          <a class="text-neutral-500 dark:text-neutral-400 pl-6 py-3 hover:bg-neutral-800/30 hover:text-white transition-all duration-200 font-manrope text-sm font-medium flex items-center gap-3 rounded-2xl" href="#">
-            <span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
-            Help
-          </a>
+            About
+          </a>  -->
         </nav>
       </div>
     </aside>
@@ -283,7 +264,7 @@
             </div>
             <div class="flex-1 space-y-6">
               <div class="max-w-[90%] text-on-surface font-chat-bubble text-chat-bubble leading-relaxed">
-                Welcome to Aura Weather. Ask me about current weather in any location, and I will return a polished, real-time report.
+                Welcome to Weather Agent. Ask me about the current weather in any location, and I will return a polished, real-time report.
               </div>
             </div>
           </div>
@@ -305,11 +286,6 @@
                 <span class="material-symbols-outlined" data-icon="send">send</span>
               </button>
             </div>
-          </div>
-          <div class="mt-3 flex justify-center gap-4">
-            <button class="text-xs font-semibold text-neutral-500 px-4 py-2 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-colors">Hourly Forecast</button>
-            <button class="text-xs font-semibold text-neutral-500 px-4 py-2 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-colors">Rain Outlook</button>
-            <button class="text-xs font-semibold text-neutral-500 px-4 py-2 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-colors">Weekend Plans</button>
           </div>
         </div>
       </div>
