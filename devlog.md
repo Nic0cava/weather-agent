@@ -451,3 +451,29 @@ uv run main.py
 ## Verification
 - Re-ran compile/sanity checks after updates:
   - `./.venv/Scripts/python.exe -m compileall app/weather_agent.py app/main.py`
+
+# 15. Map + Time Personalization + Input UI Cleanup
+
+## Chat Input UI
+- Removed unused `add_circle` (+) icon from both mobile and desktop chat input bars.
+- Added slight left padding to both input fields (`pl-3`) to keep text alignment balanced after icon removal.
+
+## Weather Map Integration (Google Static Maps)
+- Added dynamic map support using the same weather coordinates (`latitude`, `longitude`) returned from Open-Meteo.
+- Added backend `map_image_url` field in weather payload (`WeatherPayload`) in `app/weather_agent.py`.
+- Added `_build_google_static_map_url(...)` helper that builds Google Static Maps URLs when `GOOGLE_MAPS_API_KEY` is available.
+- Frontend desktop weather card now uses `weather.map_image_url` and falls back to the existing placeholder image when no key is configured.
+
+## Map Overlay Pin UX
+- Updated desktop map card behavior to avoid covering map labels:
+  - If dynamic Google map is present, hide the center overlay pin.
+  - If fallback placeholder is used, keep the center overlay pin.
+
+## Timezone / Per-User Time Fix
+- Updated Open-Meteo request to use `timeformat=unixtime` for absolute timestamps.
+- Updated frontend `formatDateTime(...)` to detect Unix timestamps and render in each user’s local browser timezone.
+- Result: weather card time now adapts per user locale/timezone instead of showing mismatched static interpretation.
+
+## Verification
+- Re-ran compile/sanity checks:
+  - `./.venv/Scripts/python.exe -m compileall app/weather_agent.py app/main.py`

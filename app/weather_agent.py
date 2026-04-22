@@ -37,7 +37,7 @@ TOOLS = [
 class CurrentWeather(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    time: str | None = None
+    time: int | str | None = None
     temperature_2m: float | None = None
     temperature_2m_f: float | None = None
     apparent_temperature: float | None = None
@@ -69,6 +69,7 @@ class WeatherPayload(BaseModel):
     longitude: float | None = None
     timezone: str | None = None
     location_label: str | None = None
+    map_image_url: str | None = None
     current: CurrentWeather | None = None
     current_units: CurrentUnits | None = None
 
@@ -183,12 +184,34 @@ def _reverse_geocode_location_label(latitude: float, longitude: float) -> str | 
     return None
 
 
+def _build_google_static_map_url(latitude: float, longitude: float) -> str | None:
+    api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+    if not api_key:
+        return None
+
+    return (
+        "https://maps.googleapis.com/maps/api/staticmap"
+        "?size=1200x500"
+        "&scale=2"
+        "&maptype=roadmap"
+        f"&center={latitude},{longitude}"
+        "&zoom=11"
+        f"&markers=color:red|{latitude},{longitude}"
+        "&style=feature:poi|visibility:off"
+        "&style=feature:transit|visibility:simplified"
+        "&style=feature:road|element:geometry|color:0x2a2a2a"
+        "&style=feature:water|color:0x1a1a1a"
+        f"&key={api_key}"
+    )
+
+
 def get_weather(latitude: float, longitude: float) -> dict:
     """Get current weather conditions from Open-Meteo for specific coordinates."""
     response = requests.get(
         (
             "https://api.open-meteo.com/v1/forecast"
             f"?latitude={latitude}&longitude={longitude}"
+            "&timeformat=unixtime"
             "&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code,uv_index"
         ),
         timeout=20,
@@ -215,12 +238,14 @@ def get_weather(latitude: float, longitude: float) -> dict:
         "apparent_temperature_f": "°F",
     }
     location_label = _reverse_geocode_location_label(latitude, longitude)
+    map_image_url = _build_google_static_map_url(latitude, longitude)
 
     return {
         "latitude": data.get("latitude"),
         "longitude": data.get("longitude"),
         "timezone": data.get("timezone"),
         "location_label": location_label,
+        "map_image_url": map_image_url,
         "current": current_with_converted,
         "current_units": current_units_with_converted,
     }
