@@ -1,0 +1,31 @@
+{
+  "app_name": "Weather Agent",
+  "summary": "Weather Agent is a chat-first weather assistant that provides current conditions in a polished, card-based interface.",
+  "how_it_works": [
+    "The chat interprets user intent and detects whether a message is about weather or about the application itself.",
+    "For weather questions, the assistant uses tool-calling to fetch live weather data from Open-Meteo.",
+    "Returned data is formatted into chat text plus structured weather cards in the UI."
+  ],
+  "capabilities": [
+    "Current weather by location query",
+    "Card-based weather display with condition, temperature, humidity, wind, and UV index",
+    "Temperature unit toggle between Celsius and Fahrenheit",
+    "Responsive mobile and desktop chat layouts",
+    "Location label enhancement using reverse geocoding when available"
+  ],
+  "data_sources": [
+    "Open-Meteo forecast API (weather conditions)",
+    "OpenStreetMap Nominatim reverse geocoding (location labels)"
+  ],
+  "limitations": [
+    "The app currently focuses on current conditions rather than full multi-day forecasts.",
+    "Location labels depend on reverse geocoding availability and may fall back to parsed user input.",
+    "Some details can vary by region and source coverage."
+  ],
+  "tech_stack": [
+    "FastAPI",
+    "Jinja2 templates",
+    "OpenAI Chat Completions API",
+    "Vanilla JavaScript and Tailwind CSS"
+  ]
+}

@@ -24,6 +24,7 @@ class ChatResponse(BaseModel):
     response: str
     temperature: float | None = None
     weather: dict | None = None
+    app_info: dict | None = None
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -50,6 +51,11 @@ async def chat(payload: ChatRequest) -> ChatResponse:
         response=result.response,
         temperature=result.temperature,
         weather=result.weather,
+        app_info=(
+            result.app_info.model_dump()
+            if getattr(result, "app_info", None) is not None
+            else None
+        ),
     )
 
 

@@ -418,3 +418,36 @@ uv run main.py
 ## Reliability / Cleanup
 - Fixed encoding artifacts introduced during iterative edits (unit symbols and separators).
 - Re-ran Python compile checks for backend files after changes.
+
+# 14. About Retrieval + Response Formatting Improvements
+
+## App Retrieval (JSON-backed Q&A)
+- Added `app/data/app_info.json` as a structured knowledge base for application-level questions.
+- Updated `app/weather_agent.py` to detect app/about intent (e.g., "What can you do?", "How does this work?").
+- For app-intent questions:
+  - Injects JSON knowledge into system context.
+  - Uses structured parse response path.
+  - Returns `app_info` in the response payload for frontend-aware formatting.
+
+## About Button Behavior
+- Kept About button behavior separate from chat Q&A.
+- About button now shows a simple summary-style About card only (title + concise summary), with no extra nested blocks that looked like clickable buttons.
+- Applied to both mobile and desktop About actions.
+
+## Chat Output Styling + Readability
+- Added assistant text formatter in `app/templates/index.html` for cleaner normal answers:
+  - Converts markdown-style `**bold**` to real bold text.
+  - Converts numbered steps (`1.`, `2.`, etc.) into ordered list rendering.
+  - Improves paragraph spacing and readability in both mobile and desktop chat bubbles.
+- Added organized app-answer rendering logic so app-related user questions show structured text from JSON-backed context instead of reusing the About button pop-up card.
+
+## Error Handling Hardening
+- Fixed backend response serialization for `app_info` in `app/main.py` by converting Pydantic model to dict (`model_dump`) before returning API response.
+- Hardened frontend `/api/chat` fetch handling:
+  - If server returns JSON, parse JSON.
+  - If server returns non-JSON text (e.g., Internal Server Error), parse text and surface readable error.
+  - Prevents client-side `Unexpected token ... is not valid JSON` failures.
+
+## Verification
+- Re-ran compile/sanity checks after updates:
+  - `./.venv/Scripts/python.exe -m compileall app/weather_agent.py app/main.py`

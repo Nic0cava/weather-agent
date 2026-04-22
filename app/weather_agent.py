@@ -1,16 +1,17 @@
-﻿import json
+import json
 import os
+from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
 from openai import OpenAI
-from pydantic import ConfigDict
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 load_dotenv()
 
 SYSTEM_PROMPT = "You are a helpful weather assistant."
 MODEL_NAME = "gpt-4o"
+APP_INFO_PATH = Path(__file__).resolve().parent / "data" / "app_info.json"
 
 TOOLS = [
     {
@@ -72,6 +73,18 @@ class WeatherPayload(BaseModel):
     current_units: CurrentUnits | None = None
 
 
+class AppInfo(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    app_name: str | None = None
+    summary: str | None = None
+    how_it_works: list[str] = []
+    capabilities: list[str] = []
+    data_sources: list[str] = []
+    limitations: list[str] = []
+    tech_stack: list[str] = []
+
+
 class WeatherResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -86,6 +99,10 @@ class WeatherResponse(BaseModel):
         default=None,
         description="Structured weather payload for UI weather cards.",
     )
+    app_info: AppInfo | None = Field(
+        default=None,
+        description="Structured application information for about/help cards.",
+    )
 
 
 def _get_client() -> OpenAI:
@@ -93,6 +110,29 @@ def _get_client() -> OpenAI:
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY is not set.")
     return OpenAI(api_key=api_key)
+
+
+def _load_app_info() -> dict | None:
+    try:
+        with APP_INFO_PATH.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _is_about_query(user_message: str) -> bool:
+    text = user_message.lower()
+    keywords = [
+        "what are you",
+        "how does this work",
+        "what can you do",
+        "about",
+        "who made you",
+        "what is this app",
+        "features",
+        "capabilities",
+    ]
+    return any(keyword in text for keyword in keywords)
 
 
 def _title_case(value: str | None) -> str | None:
@@ -196,10 +236,45 @@ def run_weather_chat(user_message: str) -> WeatherResponse:
     client = _get_client()
     weather_payload: dict | None = None
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": user_message},
-    ]
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+
+    app_info = _load_app_info()
+    use_weather_tools = True
+    if _is_about_query(user_message) and app_info:
+        use_weather_tools = False
+        messages.append(
+            {
+                "role": "system",
+                "content": (
+                    "The user is asking about this application. "
+                    "Use only the following JSON knowledge base for app-related facts:\n"
+                    f"{json.dumps(app_info)}"
+                ),
+            }
+        )
+        messages.append(
+            {
+                "role": "system",
+                "content": (
+                    "Answer app questions in a readable structured format using short section headers and bullets. "
+                    "Use plain text only. Keep it concise, but organized."
+                ),
+            }
+        )
+
+    messages.append({"role": "user", "content": user_message})
+
+    if not use_weather_tools:
+        completion = client.beta.chat.completions.parse(
+            model=MODEL_NAME,
+            messages=messages,
+            response_format=WeatherResponse,
+        )
+        parsed = completion.choices[0].message.parsed
+        if parsed is None:
+            raise RuntimeError("Model returned an empty parsed weather response.")
+        parsed.app_info = AppInfo.model_validate(app_info)
+        return parsed
 
     completion = client.chat.completions.create(
         model=MODEL_NAME,
@@ -240,4 +315,3 @@ def run_weather_chat(user_message: str) -> WeatherResponse:
         parsed.weather = weather_payload
 
     return parsed
-
